@@ -63,27 +63,5 @@ def extract(markdown_file, output_dir, diagram_types):
         raise click.Abort()
 
 
-@cli.command()
-@click.argument("markdown_file", type=click.Path(exists=True))
-def extract_mermaid(markdown_file):
-    """Extract Mermaid diagrams from a Markdown file (legacy command)."""
-    input_path = Path(markdown_file)
-
-    try:
-        click.echo(f"Extracting Mermaid diagrams from {input_path}")
-
-        # Extract diagrams
-        diagrams = extract_mermaid_diagrams(input_path)
-
-        click.echo(f"Found {len(diagrams)} Mermaid diagrams")
-
-        for i, diagram in enumerate(diagrams):
-            click.echo(f"Mermaid diagram {i + 1}: {diagram[:100]}")
-
-    except Exception as e:
-        logger.error(f"Error processing {input_path}: {str(e)}")
-        raise click.Abort()
-
-
 if __name__ == "__main__":
     cli()
