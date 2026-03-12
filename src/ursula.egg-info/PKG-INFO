@@ -1,0 +1,66 @@
+Metadata-Version: 2.4
+Name: ursula
+Version: 0.1.0
+Summary: A tool for extracting and rendering Mermaid diagrams from Markdown files
+Home-page: https://github.com/bryankemp/ursula
+Author: Bryan Kemp
+Author-email: bryan@kempville.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: click>=8.0
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# Ursula
+
+A tool for extracting and rendering Mermaid diagrams from Markdown files.
+
+## Features
+
+- Extract Mermaid diagrams from Markdown files
+- Render diagrams to PNG format
+- Command-line interface for easy usage
+
+## Installation
+
+```bash
+pip install .
+```
+
+## Usage
+
+```bash
+# Extract diagrams from a Markdown file
+ursula extract input.md
+
+# Extract diagrams and save to a specific directory
+ursula extract input.md --output-dir ./output
+```
+
+## Development
+
+To install in development mode:
+
+```bash
+pip install -e .
+```
+
+## Testing
+
+Run tests with pytest:
+
+```bash
+pytest tests/
+```

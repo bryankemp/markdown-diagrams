@@ -1,0 +1,2 @@
+[console_scripts]
+ursula = src.main:cli

@@ -1,0 +1,11 @@
+LICENSE
+README.md
+setup.py
+src/ursula.egg-info/PKG-INFO
+src/ursula.egg-info/SOURCES.txt
+src/ursula.egg-info/dependency_links.txt
+src/ursula.egg-info/entry_points.txt
+src/ursula.egg-info/requires.txt
+src/ursula.egg-info/top_level.txt
+tests/test_extractors.py
+tests/test_main.py
