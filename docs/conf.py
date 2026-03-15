@@ -3,19 +3,18 @@
 import os
 import sys
 
-# Add the project source directory to the path
+# Add the project root to the path so autodoc can find the package
 sys.path.insert(0, os.path.abspath(".."))
-sys.path.insert(0, os.path.abspath("../src"))
 
 # -- Project information -----------------------------------------------------
-project = "Ursula"
-copyright = "2026, Your Name"
-author = "Your Name"
+project = "markdown-diagrams"
+copyright = "2026, Bryan Kemp"
+author = "Bryan Kemp"
 
 # The short X.Y version
-version = "0.1.0"
+version = "1.0"
 # The full version, including alpha/beta/rc tags
-release = "0.1.0"
+release = "1.0.0"
 
 # -- General configuration ---------------------------------------------------
 extensions = [

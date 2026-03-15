@@ -1,3 +1,3 @@
 """
-Unit tests for the Ursula project.
+Unit tests for the markdown-diagrams project.
 """

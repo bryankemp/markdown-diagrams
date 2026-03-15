@@ -1,12 +1,26 @@
 API Reference
-==========
+=============
 
-.. automodule:: src.main
+CLI
+---
+
+.. automodule:: markdown_diagrams.main
    :members:
    :undoc-members:
    :show-inheritance:
 
-.. automodule:: src.extractors
+Extractors
+----------
+
+.. automodule:: markdown_diagrams.extractors
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Renderers
+---------
+
+.. automodule:: markdown_diagrams.renderers
    :members:
    :undoc-members:
    :show-inheritance:

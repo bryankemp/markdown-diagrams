@@ -1,0 +1,74 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "markdown-diagrams"
+version = "1.0.0"
+description = "Extract and render Mermaid diagrams from Markdown files"
+readme = "README.md"
+authors = [{name = "Bryan Kemp", email = "bryan@kempville.com"}]
+license = {text = "BSD-3-Clause"}
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+    "Topic :: Documentation",
+    "Topic :: Text Processing :: Markup :: Markdown",
+]
+requires-python = ">=3.9"
+dependencies = [
+    "click>=8.0",
+]
+keywords = ["mermaid", "markdown", "diagrams", "renderer", "extractor"]
+
+[project.urls]
+Homepage = "https://github.com/bryankemp/markdown-diagrams"
+Documentation = "https://markdown-diagrams.readthedocs.io"
+Repository = "https://github.com/bryankemp/markdown-diagrams"
+"Bug Tracker" = "https://github.com/bryankemp/markdown-diagrams/issues"
+
+[project.scripts]
+markdown-diagrams = "markdown_diagrams.main:cli"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "black",
+    "ruff",
+    "mypy",
+]
+docs = [
+    "sphinx>=4.0",
+    "sphinx-rtd-theme>=0.5",
+]
+
+[tool.setuptools]
+packages = ["markdown_diagrams"]
+
+[tool.setuptools.package-dir]
+markdown_diagrams = "markdown_diagrams"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.black]
+line-length = 88
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true

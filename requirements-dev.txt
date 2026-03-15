@@ -1,5 +1,8 @@
 # Development dependencies
 pytest>=6.0
+black
+ruff
+mypy
 sphinx>=4.0
 sphinx-rtd-theme>=0.5
 click>=8.0
