@@ -81,6 +81,44 @@ def _find_preceding_heading(content: str, position: int) -> Optional[str]:
     return last_heading
 
 
+def _find_preceding_label(
+    content: str, position: int, max_lines_back: int = 5
+) -> Optional[str]:
+    """Find a descriptive bold-text label immediately before a diagram fence.
+
+    Many Markdown documents place a descriptive title in bold text
+    (``**Title**``) on the line(s) just above a code fence, while the
+    nearest ``#``-heading is a generic section name like "Diagrams".
+    This function returns that bold label when present so it can be
+    used for a more descriptive filename.
+
+    Args:
+        content: The full markdown file content.
+        position: The character offset of the diagram code fence.
+        max_lines_back: How many lines before the fence to search.
+
+    Returns:
+        The bold label text (without ``**`` markers), or None.
+    """
+    # Grab the text just before the code fence and split into lines.
+    preceding = content[:position].rstrip()
+    lines = preceding.split("\n")
+    search_lines = lines[-max_lines_back:] if len(lines) >= max_lines_back else lines
+
+    # Walk backwards to find the closest bold-text label.
+    bold_pattern = re.compile(r"^\s*\*\*(.+?)\*\*\s*$")
+    for line in reversed(search_lines):
+        stripped = line.strip()
+        if not stripped:
+            continue
+        m = bold_pattern.match(stripped)
+        if m:
+            return m.group(1).strip()
+        # Stop searching once we hit non-empty, non-bold content.
+        break
+    return None
+
+
 def heading_to_filename(heading: str) -> str:
     """Convert a markdown heading to a filesystem-safe filename stem.
 
@@ -116,7 +154,9 @@ def extract_diagrams(
     Returns:
         Dictionary mapping diagram type to a list of dicts, each with:
             - ``content``: The diagram source text.
-            - ``heading``: The nearest preceding markdown heading, or None.
+            - ``heading``: The best available label for the diagram: a
+              bold-text title immediately above the fence if present,
+              otherwise the nearest preceding markdown heading, or None.
     """
     # Initialize result dictionary
     result: Dict[str, List[Dict[str, Any]]] = {
@@ -157,7 +197,10 @@ def extract_diagrams(
                     if diagram_content:
                         if prefix:
                             diagram_content = f"{prefix}\n{diagram_content}"
-                        heading = _find_preceding_heading(content, match.start())
+                        label = _find_preceding_label(content, match.start())
+                        heading = label or _find_preceding_heading(
+                            content, match.start()
+                        )
                         diagrams.append(
                             {"content": diagram_content, "heading": heading}
                         )
