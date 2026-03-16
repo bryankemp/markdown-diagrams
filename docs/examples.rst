@@ -330,40 +330,40 @@ System requirements:
 
    requirementDiagram
 
-       requirement high_availability {
-           id: REQ-001
-           text: System shall maintain 99.9% uptime
-           risk: high
-           verifymethod: test
-       }
+   requirement high_availability {
+   id: 1
+   text: System shall maintain 99.9 percent uptime
+   risk: high
+   verifymethod: test
+   }
 
-       requirement data_encryption {
-           id: REQ-002
-           text: All data at rest shall be encrypted
-           risk: medium
-           verifymethod: inspection
-       }
+   requirement data_encryption {
+   id: 2
+   text: All data at rest shall be encrypted
+   risk: medium
+   verifymethod: inspection
+   }
 
-       requirement response_time {
-           id: REQ-003
-           text: API responses shall complete within 200ms
-           risk: medium
-           verifymethod: test
-       }
+   requirement response_time {
+   id: 3
+   text: API responses shall complete within 200ms
+   risk: medium
+   verifymethod: test
+   }
 
-       element load_balancer {
-           type: component
-           docref: arch/lb
-       }
+   element load_balancer {
+   type: component
+   docref: arch_lb
+   }
 
-       element encryption_module {
-           type: component
-           docref: arch/crypto
-       }
+   element encryption_module {
+   type: component
+   docref: arch_crypto
+   }
 
-       load_balancer - satisfies -> high_availability
-       encryption_module - satisfies -> data_encryption
-       load_balancer - satisfies -> response_time
+   load_balancer - satisfies -> high_availability
+   encryption_module - satisfies -> data_encryption
+   load_balancer - satisfies -> response_time
 
 C4 Context Diagram
 ------------------
