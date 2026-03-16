@@ -24,3 +24,19 @@ Renderers
    :members:
    :undoc-members:
    :show-inheritance:
+
+Validators
+----------
+
+.. automodule:: markdown_diagrams.validators
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Dependencies
+------------
+
+.. automodule:: markdown_diagrams.dependencies
+   :members:
+   :undoc-members:
+   :show-inheritance:

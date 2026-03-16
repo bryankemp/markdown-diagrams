@@ -5,6 +5,7 @@ from pathlib import Path
 from markdown_diagrams.extractors import (
     DIAGRAM_PATTERNS,
     _find_preceding_heading,
+    _find_preceding_label,
     extract_diagrams,
     extract_diagrams_with_position,
     extract_mermaid_diagrams,
@@ -196,3 +197,69 @@ class TestFindPrecedingHeading:
     def test_multiple_heading_levels(self):
         content = "# H1\n## H2\n### H3\ntext"
         assert _find_preceding_heading(content, len(content)) == "H3"
+
+
+# ---------------------------------------------------------------------------
+# _find_preceding_label
+# ---------------------------------------------------------------------------
+
+
+class TestFindPrecedingLabel:
+    """Tests for the _find_preceding_label helper."""
+
+    def test_finds_bold_label(self):
+        content = "### Diagrams\n\n**My Flowchart**\n\n```mermaid\n"
+        pos = content.index("```mermaid")
+        assert _find_preceding_label(content, pos) == "My Flowchart"
+
+    def test_no_bold_label(self):
+        content = "### Diagrams\n\nSome text\n\n```mermaid\n"
+        pos = content.index("```mermaid")
+        assert _find_preceding_label(content, pos) is None
+
+    def test_bold_label_too_far_back(self):
+        content = "**Far Away Title**\n" + "line\n" * 10 + "```mermaid\n"
+        pos = content.index("```mermaid")
+        assert _find_preceding_label(content, pos) is None
+
+    def test_adjacent_bold_label(self):
+        content = "**Direct Title**\n```mermaid\n"
+        pos = content.index("```mermaid")
+        assert _find_preceding_label(content, pos) == "Direct Title"
+
+    def test_bold_with_special_chars(self):
+        content = "**Flowchart \u2013 License Injection / Revocation**\n\n```mermaid\n"
+        pos = content.index("```mermaid")
+        assert (
+            _find_preceding_label(content, pos)
+            == "Flowchart \u2013 License Injection / Revocation"
+        )
+
+    def test_stops_at_non_bold_content(self):
+        """Non-empty, non-bold line between the label and the fence."""
+        content = "**Title**\nSome plain text\n\n```mermaid\n"
+        pos = content.index("```mermaid")
+        assert _find_preceding_label(content, pos) is None
+
+
+# ---------------------------------------------------------------------------
+# Bold-label integration with extract_diagrams
+# ---------------------------------------------------------------------------
+
+
+class TestBoldLabelIntegration:
+    """Verify bold-text labels are preferred over section headings."""
+
+    def test_bold_labels_used_over_heading(self):
+        result = extract_diagrams(DATA_DIR / "bold_labels.md")
+        headings = [d["heading"] for d in result["mermaid"]]
+        assert headings == [
+            "Flowchart \u2013 License Injection Process",
+            "Sequence Diagram \u2013 Driver Interaction",
+            "Flowchart \u2013 License Evaluation",
+        ]
+
+    def test_falls_back_to_heading_without_bold(self):
+        """Files without bold labels still use the heading."""
+        result = extract_diagrams(DATA_DIR / "simple_flowchart.md")
+        assert result["mermaid"][0]["heading"] == "Process Overview"

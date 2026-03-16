@@ -6,7 +6,7 @@ Extract and render [Mermaid](https://mermaid.js.org/) diagrams from Markdown fil
 
 - Extract Mermaid diagrams from any Markdown file
 - Render diagrams to PNG, SVG, and PDF formats
-- Automatically name output files based on document headings
+- Automatically name output files based on bold-text titles or document headings
 - Support for 19 diagram types (flowchart, sequence, ER, class, state, gantt, and more)
 - Extensible architecture for additional diagram types
 
@@ -73,11 +73,32 @@ markdown-diagrams extract document.md -f pdf
 markdown-diagrams extract document.md -w 1000 -H 800 -T dark
 ```
 
+### Validate diagrams
+
+```bash
+# Check all diagrams for syntax errors
+markdown-diagrams validate document.md
+
+# Auto-fix common issues (whitespace, unquoted labels)
+markdown-diagrams validate document.md --fix
+
+# Preview fixes without writing
+markdown-diagrams validate document.md --dry-run
+```
+
 ## Supported Diagram Types
 
 `mermaid` · `flowchart` · `sequence` · `graph` · `gantt` · `pie` · `mindmap` ·
 `quadrantDiagram` · `er` · `class` · `state` · `journey` · `gitGraph` ·
 `userJourney` · `requirement` · `c4` · `entityRelationship` · `component` · `active`
+
+### Filename strategy
+
+When a bold-text title (e.g. `**Flowchart – License Injection**`) appears
+directly above a code fence, it is used as the output filename. Otherwise
+the nearest `#`-heading is used. This means documents that follow the
+common pattern of a generic `### Diagrams` heading with descriptive bold
+titles per diagram will get meaningful filenames automatically.
 
 ## Python API
 
