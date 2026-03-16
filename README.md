@@ -116,6 +116,11 @@ for diagram_type, items in diagrams.items():
 render_mermaid_diagram(items[0]["content"], output_dir="./output")
 ```
 
+## Examples
+
+See [`examples/all_diagram_types.md`](examples/all_diagram_types.md) for a
+complete reference with every supported diagram type.
+
 ## Development
 
 ```bash
