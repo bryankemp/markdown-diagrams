@@ -25,28 +25,31 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ValidationResult:
-    """Result of validating a single Mermaid diagram.
-
-    Attributes:
-        index: 1-based position of the diagram within the file.
-        heading: Nearest preceding Markdown heading, or None.
-        content: Original diagram source text.
-        valid: True if mmdc accepted the diagram without errors.
-        errors: List of error messages returned by mmdc (empty when valid).
-        fixed_content: Auto-fixed diagram source, or None if no changes
-            were needed.
-        start: Byte offset of the opening `` ```mermaid `` fence in the file.
-        end: Byte offset immediately after the closing `` ``` `` fence.
-    """
+    """Result of validating a single Mermaid diagram."""
 
     index: int
+    """1-based position of the diagram within the file."""
+
     heading: Optional[str]
+    """Nearest preceding Markdown heading, or ``None``."""
+
     content: str
+    """Original diagram source text."""
+
     valid: bool
+    """``True`` if mmdc accepted the diagram without errors."""
+
     errors: List[str] = field(default_factory=list)
+    """List of error messages returned by mmdc (empty when valid)."""
+
     fixed_content: Optional[str] = None
+    """Auto-fixed diagram source, or ``None`` if no changes were needed."""
+
     start: int = 0
+    """Byte offset of the opening mermaid fence in the file."""
+
     end: int = 0
+    """Byte offset immediately after the closing fence."""
 
 
 def fix_diagram(content: str) -> str:

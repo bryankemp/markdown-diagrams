@@ -21,7 +21,12 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.viewcode",
     "sphinx.ext.napoleon",
+    "sphinxcontrib.mermaid",
 ]
+
+# Render Mermaid diagrams using the JS CDN (no mmdc needed on the build server)
+mermaid_version = "11.4.1"
+mermaid_init_js = "mermaid.initialize({startOnLoad:true});"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -41,13 +46,12 @@ pygments_style = "sphinx"
 
 # -- Options for HTML output -------------------------------------------------
 html_theme = "sphinx_rtd_theme"
-html_static_path = ["_static"]
+html_static_path = []
 
 # -- Extension configuration -------------------------------------------------
 autodoc_default_options = {
     "members": True,
     "member-order": "bysource",
-    "special-members": "__init__",
     "undoc-members": True,
     "exclude-members": "__weakref__",
 }

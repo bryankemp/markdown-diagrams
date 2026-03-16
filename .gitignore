@@ -82,3 +82,6 @@ tests/data/*.pdf
 
 # mypy
 .mypy_cache/
+
+# Sphinx build output
+docs/_build/
